@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+	*{margin:0; padding:0;}
+	#div1{margin:100px 0 0 400px;}
+	a{margin-left:10px;}
+
+</style>
+	
+<title>分页</title>
+<script type=" text/javascript">
+window.onload=function(){ 
+page({
+	id:'div1',
+	nowPage:1,
+	allPage:10
+});
+
+	
+}
+function page(e){ 
+	var oDiv=document.getElementById(e.id);
+	var nowPage=e.nowPage||1;
+	var allPage=e.allPage||5;
+	// if(nowPage>=4){
+	// 	var oA=document.createElement('a');
+	// 	oA.href='#1';
+	// 	oA.innerHTML='首页';
+	// 	oDiv.appendChild(oA);
+	// }
+	if(nowPage>=1){
+		var oA=document.createElement('a');
+		oA.href='#'+(nowPage-1);
+		oA.innerHTML='上一页';
+		oDiv.appendChild(oA);
+	}
+	if(allPage<=5){   			 //当总页数只有不大于五页的时候
+		for(var i=1;i<=allPage;i++){
+		var oA=document.createElement('a');
+		oA.href='#'+i;
+		if(i==nowPage){
+			oA.innerHTML=i;
+		}else{
+			oA.innerHTML='['+i+']';
+		}
+		oDiv.appendChild(oA);
+		}
+	}else{								//大于五页的时候
+		for(var i=1;i<=5;i++){
+			var oA=document.createElement('a');
+			if(nowPage==1||nowPage==2){      //当前页为1和2时
+				oA.href='#'+i;
+				if(i==nowPage){
+					oA.innerHTML=nowPage;
+				}else{
+					oA.innerHTML='['+i+']';
+				}
+			}else if(allPage-nowPage==1||allPage-nowPage==0){//当前页是最后1或2页
+				oA.href='#'+(allPage-5+i);
+				if(i==nowPage-allPage+5){
+					oA.innerHTML=nowPage;
+				}else{
+					oA.innerHTML='['+(allPage-5+i)+']';
+				}
+			}else{
+				oA.href='#'+(nowPage-3+i);
+				if(i==3){
+					oA.innerHTML=nowPage;
+				}else{
+					oA.innerHTML='['+(nowPage-3+i)+']';
+				}
+			}
+			oDiv.appendChild(oA);
+		}
+	}
+	if(nowPage<allPage){
+		var oA=document.createElement('a');
+		oA.href='#'+(nowPage+1);
+		oA.innerHTML='下一页';
+		oDiv.appendChild(oA);
+	}
+	if(nowPage==allPage){
+		var oA=document.createElement('a');
+		oA.href='#'+(nowPage);
+		oA.innerHTML='下一页';
+		oDiv.appendChild(oA);
+	}
+
+	// if(allPage-nowPage>=3){
+	// 	var oA=document.createElement('a');
+	// 	oA.href='#'+allPage;
+	// 	oA.innerHTML='尾页';
+	// 	oDiv.appendChild(oA);
+	// }
+
+var oA=document.getElementsByTagName('a');
+	for(var i=0;i<oA.length;i++){
+		oA[i].onclick=function(){
+		var nowPage=parseInt(this.getAttribute('href').substring(1));
+		
+			oDiv.innerHTML ='';
+			page({
+				id : e.id,
+				nowPage : nowPage,
+				allPage : allPage
+			});
+			return false;
+		}
+	}
+}
+
+
+</script>
+</head>
+<body>
+<div>1</div>
+<div></div>
+<div id="div1">
+  <!--<a href="#1">首页</a>
+  <a href="#5">上一页</a>
+  <a href="#2">[2]</a>
+  <a href="#3">[3]</a>
+  <a href="#4">4</a>
+  <a href="#5">[5]</a>
+  <a href="#6">[6]</a>
+  <a href="#5">下一页</a>
+  <a href="#10">尾页</a>
+-->
+</div>
+
+</body>
+</html>
